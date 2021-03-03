@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0.103-buster-slim
+FROM mcr.microsoft.com/dotnet/sdk:5.0.200-buster-slim
 
 RUN apt-get update && \
 	apt-get install -y make && \
