@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0.301-bullseye-slim
+FROM mcr.microsoft.com/dotnet/sdk:6.0.302-bullseye-slim
 
 RUN apt-get update && \
 	apt-get install -y make && \
