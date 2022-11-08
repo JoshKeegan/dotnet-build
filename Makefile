@@ -3,17 +3,28 @@ IMAGE = dotnet-build#
 DOCKER_HUB_USERNAME = joshkeegan#
 IMAGE_URL = $(DOCKER_HUB_USERNAME)/$(IMAGE)#
 
+.PHONY: clean
 clean:
 	rm -r artefacts || true
 	mkdir artefacts
 
+.PHONY: format
+format:
+	@docker run --rm \
+		-v $(PWD):/check \
+		mstruebing/editorconfig-checker && \
+	echo "Editorconfig styles followed"
+
+.PHONY: build
 build:
 	docker build --no-cache --pull -t $(IMAGE_URL):dev .
 
+.PHONY: tag
 tag: clean build get-version-number
 	docker tag $(IMAGE_URL):dev $(IMAGE_URL):`cat artefacts/version`
 	docker tag $(IMAGE_URL):dev $(IMAGE_URL):latest
 
+.PHONY: get-version-number
 get-version-number:
 # Get the version number from the version of the base image
 #	e.g. a base of mcr.microsoft.com/dotnet/core/sdk:2.2.203-stretch would have version number 2.2.203
@@ -29,15 +40,7 @@ get-version-number:
 
 	echo `cat artefacts/version`
 
-# Args:
-#	- crUsername
-#	- crPassword
-publish: docker-login tag
+.PHONY: publish
+publish:
 	docker push $(IMAGE_URL):`cat artefacts/version`
 	docker push $(IMAGE_URL):latest
-
-# Args:
-#	- crUsername
-#	- crPassword
-docker-login:
-	@docker login -u $(crUsername) -p $(crPassword)
