@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0.101-bookworm-slim
+FROM mcr.microsoft.com/dotnet/sdk:9.0.102-bookworm-slim
 
 RUN apt-get update && \
 	apt-get install -y make && \
