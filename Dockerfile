@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0.103-noble
+FROM mcr.microsoft.com/dotnet/sdk:10.0.200-noble
 
 RUN apt-get update && \
 	apt-get install -y make && \
